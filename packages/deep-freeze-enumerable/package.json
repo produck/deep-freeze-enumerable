@@ -1,7 +1,23 @@
 {
 	"name": "@produck/deep-freeze-enumerable",
-	"version": "1.0.0",
+	"version": "0.0.0",
 	"description": "Recursively freeze enumerable properties of ECMAScript objects.",
+	"keywords": [
+		"deep-freeze",
+		"freeze",
+		"immutable",
+		"readonly",
+		"enumerable",
+		"object"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/produck/deep-freeze-enumerable.git"
+	},
+	"bugs": {
+		"url": "https://github.com/produck/deep-freeze-enumerable/issues"
+	},
+	"homepage": "https://github.com/produck/deep-freeze-enumerable#readme",
 	"license": "MIT",
 	"author": "ChaosLee",
 	"publishConfig": {
