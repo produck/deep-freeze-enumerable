@@ -1,5 +1,15 @@
+declare const __deepReadonlyUniqueSymbolBrand: unique symbol;
+
+type DeepReadonlyUniqueSymbol = symbol & {
+	readonly [__deepReadonlyUniqueSymbolBrand]: true;
+};
+
 export type DeepReadonly<T> = T extends (...args: unknown[]) => unknown
 	? T
+	: T extends symbol
+		? symbol extends T
+			? DeepReadonlyUniqueSymbol
+			: T
 	: T extends readonly (infer U)[]
 		? ReadonlyArray<DeepReadonly<U>>
 		: T extends object

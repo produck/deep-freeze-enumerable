@@ -63,6 +63,31 @@ Behavior: the original value is returned as-is, possibly not frozen.
 implementation.
 Behavior: they are returned unchanged.
 
+## TypeScript Type Notes
+
+### Symbol-valued properties
+
+When `DeepReadonly<T>` recurses into a property whose value type is
+`symbol`, it is treated as a unique-symbol-like readonly symbol type.
+
+- A broad `symbol` value is converted to a branded symbol type.
+- An already narrow `unique symbol` value keeps its original type.
+
+```typescript
+import { deepFreeze } from '@produck/deep-freeze-enumerable';
+
+declare const TOKEN: unique symbol;
+
+const value = {
+	id: Symbol('id'), // symbol
+	token: TOKEN, // unique symbol
+};
+
+const frozen = deepFreeze(value);
+// frozen.id    -> readonly unique-symbol-like symbol type
+// frozen.token -> readonly typeof TOKEN
+```
+
 ## License
 
 MIT
