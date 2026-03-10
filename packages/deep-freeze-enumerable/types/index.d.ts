@@ -5,13 +5,10 @@ import {
 	type DeepReadonlySlotToKey,
 } from './slots';
 
-type DeepReadonlyUniqueSymbolFromSlot<Slot extends DeepReadonlySlot> =
-	(typeof deepReadonlyUniqueSymbols)[DeepReadonlySlotToKey[Slot]];
-
 type DeepReadonlyUniqueSymbolFromPath<Path extends readonly PropertyKey[]> =
-	DeepReadonlyUniqueSymbolFromSlot<
-		Extract<DeepReadonlyPathSlot<Path>, DeepReadonlySlot>
-	>;
+	[DeepReadonlyPathSlot<Path>] extends [never]
+		? symbol
+		: (typeof deepReadonlyUniqueSymbols)[DeepReadonlySlotToKey[DeepReadonlyPathSlot<Path> & DeepReadonlySlot]];
 
 type DeepReadonlyInner<
 	T,
