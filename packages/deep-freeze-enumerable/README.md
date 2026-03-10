@@ -88,6 +88,20 @@ const frozen = deepFreeze(value);
 // frozen.token -> readonly typeof TOKEN
 ```
 
+### Limitation with computed property keys
+
+Even when symbol-valued properties are distinguished by `DeepReadonly`,
+TypeScript may still widen computed object keys to a generic symbol index
+in object literals.
+
+This means code like `{ [frozen.a]: x, [frozen.c.b]: y }` can be inferred
+as `Record<symbol, ...>`, and `obj[frozen.c.b]` may become a union of all
+symbol-keyed values.
+
+If you need precise key-to-value inference for computed symbol keys, use
+real `const` unique symbol keys (for example `const K = Symbol('k')`) at
+object construction time.
+
 ## License
 
 MIT
