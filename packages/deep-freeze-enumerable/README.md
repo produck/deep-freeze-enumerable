@@ -67,40 +67,89 @@ Behavior: they are returned unchanged.
 
 ### Symbol-valued properties
 
-When `DeepReadonly<T>` recurses into a property whose value type is
-`symbol`, it is treated as a unique-symbol-like readonly symbol type.
-
-- A broad `symbol` value is converted to a branded symbol type.
-- An already narrow `unique symbol` value keeps its original type.
+`deepFreeze` uses a `const` type parameter (`<const T>`), so TypeScript
+infers the narrowest possible type for the argument. This means
+`unique symbol` values keep their identity through `DeepReadonly<T>`
+without being widened to `symbol`.
 
 ```typescript
 import { deepFreeze } from '@produck/deep-freeze-enumerable';
 
 declare const TOKEN: unique symbol;
 
-const value = {
-	id: Symbol('id'), // symbol
+const frozen = deepFreeze({
 	token: TOKEN, // unique symbol
-};
+});
 
-const frozen = deepFreeze(value);
-// frozen.id    -> readonly unique-symbol-like symbol type
-// frozen.token -> readonly typeof TOKEN
+// frozen.token -> typeof TOKEN  (unique symbol preserved)
 ```
 
-### Limitation with computed property keys
+You can then use the frozen symbol values as precise computed property
+keys:
 
-Even when symbol-valued properties are distinguished by `DeepReadonly`,
-TypeScript may still widen computed object keys to a generic symbol index
-in object literals.
+```typescript
+const obj = {
+	[frozen.token]: 'hello',
+};
 
-This means code like `{ [frozen.a]: x, [frozen.c.b]: y }` can be inferred
-as `Record<symbol, ...>`, and `obj[frozen.c.b]` may become a union of all
-symbol-keyed values.
+obj[frozen.token]; // string
+```
 
-If you need precise key-to-value inference for computed symbol keys, use
-real `const` unique symbol keys (for example `const K = Symbol('k')`) at
-object construction time.
+This also works with deeply nested structures:
+
+```typescript
+const GET = Symbol('get');
+const SET = Symbol('set');
+const EMIT = Symbol('emit');
+
+const METHODS = deepFreeze({
+	STORE: {
+		GET,  // typeof GET  (unique symbol preserved)
+		SET,  // typeof SET  (unique symbol preserved)
+	},
+	EVENT: {
+		EMIT, // typeof EMIT (unique symbol preserved)
+	},
+});
+
+// METHODS.STORE.GET -> typeof GET
+// METHODS.EVENT.EMIT -> typeof EMIT
+```
+
+### Symbol literal is not `unique symbol`
+
+TypeScript only types a `Symbol()` call as `unique symbol` when it is
+assigned to a `const` variable declaration or a `static readonly` class
+property. In all other positions — including object literal property
+values — `Symbol()` is inferred as the broad `symbol` type. This is a
+TypeScript language limitation, not specific to `deepFreeze`.
+`Object.freeze` has the same behavior:
+
+```typescript
+// ❌ Symbol() inside an object literal is inferred as `symbol`
+const bad = deepFreeze({
+	ID: Symbol('id'),   // symbol, not unique symbol
+});
+
+// Object.freeze has the same problem:
+const bad2 = Object.freeze({
+	ID: Symbol('id'),   // symbol, not unique symbol
+});
+```
+
+To preserve `unique symbol` identity, declare each symbol as a separate
+`const` variable first, then reference it in the object:
+
+```typescript
+// ✅ Workaround: declare symbols as const variables first
+const ID = Symbol('id');
+const NAME = Symbol('name');
+
+const good = deepFreeze({
+	ID,     // typeof ID   (unique symbol)
+	NAME,   // typeof NAME (unique symbol)
+});
+```
 
 ## License
 

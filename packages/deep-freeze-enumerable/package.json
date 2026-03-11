@@ -1,6 +1,6 @@
 {
 	"name": "@produck/deep-freeze-enumerable",
-	"version": "1.0.2",
+	"version": "0.0.0",
 	"description": "Recursively freeze enumerable properties of ECMAScript objects.",
 	"keywords": [
 		"deep-freeze",
@@ -25,16 +25,16 @@
 	},
 	"type": "module",
 	"main": "src/index.mjs",
-	"types": "types/index.d.ts",
+	"types": "index.d.ts",
 	"exports": {
 		".": {
-			"types": "./types/index.d.ts",
+			"types": "./index.d.ts",
 			"import": "./src/index.mjs"
 		}
 	},
 	"files": [
 		"src",
-		"types"
+		"index.d.ts"
 	],
 	"scripts": {
 		"test": "node ./test/index.mjs",
