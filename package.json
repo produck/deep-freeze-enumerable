@@ -20,9 +20,6 @@
   "name": "@produck/deep-freeze-enumerable-workspace",
   "private": true,
   "scripts": {
-    "coverage": "c8 npm run test",
-    "deps:ci-install": "npm install --include=optional",
-    "lint": "eslint . --fix",
     "prepare": "husky",
     "produck:baseline": "npm exec --package=@produck/agent-toolkit@latest -- agent-toolkit enforce-node-baseline --cwd . && npm run produck:install",
     "produck:commit:check": "npm run produck:format && npm run produck:lint",
@@ -32,7 +29,7 @@
     "produck:lint": "eslint --fix . --max-warnings=0",
     "produck:publish": "npm run produck:publish:check && npm run publish --",
     "produck:publish:check": "npm run produck:install && npm run produck:coverage && npm run produck:commit:check",
-    "publish": "npm run lint && lerna publish",
+    "publish": "npm run produck:lint && lerna publish",
     "test": "npm run test --workspaces --if-present"
   },
   "workspaces": [
