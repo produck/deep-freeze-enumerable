@@ -139,3 +139,37 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 *.ign*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.idea/
+
+# Temporary
+tmp/
+temp/
+
+# produck:org-baseline
+.pnpm-debug.log*
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.vscode
+*.gen*
+publish-assets/

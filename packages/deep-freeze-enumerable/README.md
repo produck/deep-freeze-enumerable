@@ -42,26 +42,26 @@ Recursively freezes the enumerable properties of the given object.
 edge cases.
 
 1. Enumerable property access throws
-When reading `value[property]` during recursion, a getter (or proxy
-`get` trap) may throw.
-Behavior: that property is skipped and recursion continues with other
-properties.
+   When reading `value[property]` during recursion, a getter (or proxy
+   `get` trap) may throw.
+   Behavior: that property is skipped and recursion continues with other
+   properties.
 
 2. Property enumeration throws
-The `for...in` loop may fail (for example, a proxy `ownKeys` trap
-throws).
-Behavior: recursion is skipped for that object, then
-`Object.freeze(value)` is still attempted.
+   The `for...in` loop may fail (for example, a proxy `ownKeys` trap
+   throws).
+   Behavior: recursion is skipped for that object, then
+   `Object.freeze(value)` is still attempted.
 
 3. `Object.freeze` itself throws
-In rare cases, `Object.freeze(value)` can throw (for example, proxy
-trap failures).
-Behavior: the original value is returned as-is, possibly not frozen.
+   In rare cases, `Object.freeze(value)` can throw (for example, proxy
+   trap failures).
+   Behavior: the original value is returned as-is, possibly not frozen.
 
 4. Non-object values and function-valued properties
-`null`, primitives, and functions are not recursively frozen by this
-implementation.
-Behavior: they are returned unchanged.
+   `null`, primitives, and functions are not recursively frozen by this
+   implementation.
+   Behavior: they are returned unchanged.
 
 ## TypeScript Type Notes
 
@@ -78,7 +78,7 @@ import { deepFreeze } from '@produck/deep-freeze-enumerable';
 declare const TOKEN: unique symbol;
 
 const frozen = deepFreeze({
-	token: TOKEN, // unique symbol
+  token: TOKEN, // unique symbol
 });
 
 // frozen.token -> typeof TOKEN  (unique symbol preserved)
@@ -89,7 +89,7 @@ keys:
 
 ```typescript
 const obj = {
-	[frozen.token]: 'hello',
+  [frozen.token]: 'hello',
 };
 
 obj[frozen.token]; // string
@@ -103,13 +103,13 @@ const SET = Symbol('set');
 const EMIT = Symbol('emit');
 
 const METHODS = deepFreeze({
-	STORE: {
-		GET,  // typeof GET  (unique symbol preserved)
-		SET,  // typeof SET  (unique symbol preserved)
-	},
-	EVENT: {
-		EMIT, // typeof EMIT (unique symbol preserved)
-	},
+  STORE: {
+    GET, // typeof GET  (unique symbol preserved)
+    SET, // typeof SET  (unique symbol preserved)
+  },
+  EVENT: {
+    EMIT, // typeof EMIT (unique symbol preserved)
+  },
 });
 
 // METHODS.STORE.GET -> typeof GET
@@ -128,12 +128,12 @@ TypeScript language limitation, not specific to `deepFreeze`.
 ```typescript
 // ❌ Symbol() inside an object literal is inferred as `symbol`
 const bad = deepFreeze({
-	ID: Symbol('id'),   // symbol, not unique symbol
+  ID: Symbol('id'), // symbol, not unique symbol
 });
 
 // Object.freeze has the same problem:
 const bad2 = Object.freeze({
-	ID: Symbol('id'),   // symbol, not unique symbol
+  ID: Symbol('id'), // symbol, not unique symbol
 });
 ```
 
@@ -146,8 +146,8 @@ const ID = Symbol('id');
 const NAME = Symbol('name');
 
 const good = deepFreeze({
-	ID,     // typeof ID   (unique symbol)
-	NAME,   // typeof NAME (unique symbol)
+  ID, // typeof ID   (unique symbol)
+  NAME, // typeof NAME (unique symbol)
 });
 ```
 

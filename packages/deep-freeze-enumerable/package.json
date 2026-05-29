@@ -1,43 +1,44 @@
 {
-	"name": "@produck/deep-freeze-enumerable",
-	"version": "1.1.0",
-	"description": "Recursively freeze enumerable properties of ECMAScript objects.",
-	"keywords": [
-		"deep-freeze",
-		"freeze",
-		"immutable",
-		"readonly",
-		"enumerable",
-		"object"
-	],
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/produck/deep-freeze-enumerable.git"
-	},
-	"bugs": {
-		"url": "https://github.com/produck/deep-freeze-enumerable/issues"
-	},
-	"homepage": "https://github.com/produck/deep-freeze-enumerable#readme",
-	"license": "MIT",
-	"author": "ChaosLee",
-	"publishConfig": {
-		"access": "public"
-	},
-	"type": "module",
-	"main": "src/index.mjs",
-	"types": "index.d.ts",
-	"exports": {
-		".": {
-			"types": "./index.d.ts",
-			"import": "./src/index.mjs"
-		}
-	},
-	"files": [
-		"src",
-		"index.d.ts"
-	],
-	"scripts": {
-		"test": "node ./test/index.mjs",
-		"test:only": "node --test-only ./test/index.mjs"
-	}
+  "author": "ChaosLee",
+  "bugs": {
+    "url": "https://github.com/produck/deep-freeze-enumerable/issues"
+  },
+  "description": "Recursively freeze enumerable properties of ECMAScript objects.",
+  "exports": {
+    ".": {
+      "import": "./src/index.mjs",
+      "types": "./src/index.d.ts"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "homepage": "https://github.com/produck/deep-freeze-enumerable/tree/main/packages/deep-freeze-enumerable#readme",
+  "keywords": [
+    "deep-freeze",
+    "freeze",
+    "immutable",
+    "readonly",
+    "enumerable",
+    "object"
+  ],
+  "license": "MIT",
+  "main": "src/index.mjs",
+  "name": "@produck/deep-freeze-enumerable",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "directory": "packages/deep-freeze-enumerable",
+    "type": "git",
+    "url": "git+https://github.com/produck/deep-freeze-enumerable.git"
+  },
+  "scripts": {
+    "produck:coverage": "c8 --reporter=lcov --reporter=html --reporter=text-summary npm test",
+    "test": "node ./test/index.mjs",
+    "test:only": "node --test-only ./test/index.mjs"
+  },
+  "type": "module",
+  "types": "index.d.ts",
+  "version": "1.1.0"
 }
