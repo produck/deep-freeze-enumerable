@@ -173,3 +173,6 @@ temp/
 .vscode
 *.gen*
 publish-assets/
+
+# produck:org-baseline
+!.github/
