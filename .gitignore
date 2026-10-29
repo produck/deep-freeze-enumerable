@@ -119,6 +119,9 @@ dist
 # Firebase cache directory
 .firebase/
 
+# Lockfile disabled via .npmrc (package-lock=false)
+package-lock.json
+
 # TernJS port file
 .tern-port
 
